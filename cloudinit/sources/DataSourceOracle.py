@@ -287,7 +287,6 @@ class DataSourceOracle(sources.DataSource):
                     "dhcp4": False,
                     "dhcp6": False,
                     'match': {'name': name}, 'set-name': name}
-                }
 
 
 def _read_system_uuid():
