@@ -469,11 +469,9 @@ class TestGetMetadataFromIMDS(HttprettyTestCase):
             headers=mock.ANY, retries=mock.ANY,
             timeout=mock.ANY, infinite=False)
 
-    @mock.patch(MOCKPATH + 'readurl', autospec=True)
-    @mock.patch(MOCKPATH + 'EphemeralDHCPv4')
-    @mock.patch(MOCKPATH + 'net.is_up')
-    def test_get_default_metadata_uses_instance_url(
-            self, m_net_is_up, m_dhcp, m_readurl):
+    @mock.patch(MOCKPATH + "readurl", autospec=True)
+    @mock.patch(MOCKPATH + "EphemeralDHCPv4", autospec=True)
+    def test_get_default_metadata_uses_instance_url(self, m_dhcp, m_readurl):
         """Make sure readurl is called with the correct url when accessing
         metadata"""
         m_net_is_up.return_value = True
@@ -1230,13 +1228,15 @@ scbus-1 on xpt0 bus 0
 
     def test_availability_zone_set_from_imds(self):
         """Datasource.availability returns IMDS platformFaultDomain."""
-        sys_cfg = {'datasource': {'Azure': {'apply_network_config': True}}}
+        sys_cfg = {"datasource": {"Azure": {"apply_network_config": True}}}
         odata = {}
-        data = {'ovfcontent': construct_valid_ovf_env(data=odata),
-                'sys_cfg': sys_cfg}
+        data = {
+            "ovfcontent": construct_valid_ovf_env(data=odata),
+            "sys_cfg": sys_cfg,
+        }
         dsrc = self._get_ds(data)
         dsrc.get_data()
-        self.assertEqual('0', dsrc.availability_zone)
+        self.assertEqual("0", dsrc.availability_zone)
 
     def test_region_set_from_imds(self):
         """Datasource.region returns IMDS region location."""
